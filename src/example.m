@@ -1,5 +1,9 @@
-pixelValue = 0;
 imgResolution = [480, 640];
-img = createUnifImage(pixelValue, imgResolution);
+% Generate all Black Image
+pixelValue = 0;
+img = createUnifImg(pixelValue, imgResolution);
+
+% Generate all White Image
+
 % Display the image
 imshow(img, []);
