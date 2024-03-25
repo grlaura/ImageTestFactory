@@ -10,6 +10,13 @@ img = createUnifImg(pixelValue, imgResolution);
 % Save the image
 saveNextImg (img, saveDirectory, prefix, fileType)
 
+% Generate all White Image
+pixelValue = 255;
+img = createUnifImg(pixelValue, imgResolution);
+
+% Save the image
+saveNextImg (img, saveDirectory, prefix, fileType)
+
 
 
 
