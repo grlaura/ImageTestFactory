@@ -1,4 +1,4 @@
-function maxNum = getMaxSeqlNumber(dirPath, prefix)
+function maxNum = getMaxSeqNumber(dirPath, prefix)
     % Get a list of all files in the folder
     files = dir(fullfile(dirPath, [prefix, '*.png']));
     
