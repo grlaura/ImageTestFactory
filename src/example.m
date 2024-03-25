@@ -1,9 +1,15 @@
 imgResolution = [480, 640];
+prefix = 'image_';
+saveDirectory = '../results/';
+fileType = '.png';
+
 % Generate all Black Image
 pixelValue = 0;
 img = createUnifImg(pixelValue, imgResolution);
 
-% Generate all White Image
+% Save the image
+saveNextImg (img, saveDirectory, prefix, fileType)
 
-% Display the image
-imshow(img, []);
+
+
+
