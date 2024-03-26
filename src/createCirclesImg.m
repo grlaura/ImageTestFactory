@@ -23,8 +23,11 @@ function blobImage = createBlobImg(imageSize, numBlobs, minBlobSize, maxBlobSize
         
         % Add the blob to the image
         blobImage = blobImage + blob;
+
+        
+        % Normalize the image to [0, 255]
+        blobImage = 255* (blobImage / max(blobImage(:)));
     end
 
-    % Normalize the image to [0, 1]
-    blobImage = blobImage / max(blobImage(:));
+
 end

@@ -30,8 +30,6 @@ img = createRandImg(imgResolution, 0, 255);
 % Save the image
 saveNextImg (img, saveDirectory, prefix, fileType)
 
-
-
 numBlobs = 10;           % Number of blobs
 minBlobSize = 10;        % Minimum blob size (radius or diameter)
 maxBlobSize = 30;        % Maximum blob size (radius or diameter)
@@ -41,10 +39,7 @@ img = createCirclesImg(imgResolution, numBlobs, minBlobSize, maxBlobSize);
 % Save the image
 saveNextImg (img, saveDirectory, prefix, fileType)
 
-
 img = createBlobsImg(imgResolution, numBlobs, minBlobSize, maxBlobSize);
-
-
 
 % Save the image
 saveNextImg (img, saveDirectory, prefix, fileType)

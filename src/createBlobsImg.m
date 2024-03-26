@@ -25,11 +25,10 @@ function ellipseImage = createBlobsImg(imageSize, numEllipses, minEllipseSize, m
         
         % Rotate the ellipse
         rotatedEllipse = imrotate(ellipse, rad2deg(angle), 'bilinear', 'crop');
-        
         % Add the rotated ellipse to the image
         ellipseImage = ellipseImage + rotatedEllipse;
     end
 
-    % Normalize the image to [0, 1]
-    ellipseImage = ellipseImage / max(ellipseImage(:));
+    % Normalize the image to [0, 255]
+    ellipseImage = 255* (ellipseImage / max(ellipseImage(:)));
 end
