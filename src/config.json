@@ -1,0 +1,6 @@
+{
+    "angBounds": [10, 30, -10, 10, -10, 10],
+    "tBounds": [-100, 100, -100, 100, 300, 500],
+    "worldPtsFile": "./constellationKnuckle.json"
+
+  }
