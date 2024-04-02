@@ -15,7 +15,7 @@ loadedDataPts = loadParseJson(loadedData.worldPtsFile_K);
 worldPts = loadedDataPts.pointCoordinates;
 
 prefix = 'image_';
-saveDirectory = '../results/PosExamples/';
+saveDirectory = '../output/PosExamples/';
 fileType = '.png';
 
 addpath('..\..\shared');
@@ -39,6 +39,10 @@ for PtN=1:size(worldPts,1)
     worldPointsFull = [worldPointsFull; gridPoints];
 end
 worldPointsFull(:,3 ) = 0;
+
+% figure; hold on; axis equal;
+% scatter (worldPointsFull(:,1), worldPointsFull(:,2), 'b.');
+% scatter (worldPts(:,1), worldPts(:,2), 'rx');
 
 % Calculatin centre of Constlation, making selection of transforms more intuitive
 centre(1) = mean([max(worldPts(:,1)), min(worldPts(:,1))]);
@@ -81,6 +85,9 @@ while currentnumPsts < numPsts % keep creating poses until target number is reac
     % Projecting Points
     projectedPts= worldToImage(intrinsicParams,rotationMatrix,translationVector,worldPointsFull);
     
+    projectedCentrePts= worldToImage(intrinsicParams,rotationMatrix,translationVector,worldPts);
+
+    
     % Add noise to image points
     %noisyImagePts = projectedPts + noiseLevel * 2* (rand(size(projectedPts))-0.5);
     %noisyImagePts = projectedPts;
@@ -100,6 +107,7 @@ while currentnumPsts < numPsts % keep creating poses until target number is reac
    
     currentnumPsts = currentnumPsts +1;
     saveImgPts(currentnumPsts,:,:) = imagePtsOrdered;
+    GTcentres(currentnumPsts,:,:) = projectedCentrePts;
     
     saveRotationMatrices(currentnumPsts,:,:) = rotationMatrix;
     saveTranslationVectors(currentnumPsts,:) = translationVector;
@@ -111,7 +119,12 @@ end
 for i=1:size (saveImgPts,1)
     imgPts = round(squeeze(saveImgPts(i, :, :)));
     img = create_image_from_points(imgPts, imageSize);
-    saveNextImg (img, saveDirectory, prefix, fileType)
+
+    saveNumstr = saveNextImg (img, saveDirectory, prefix, fileType);
+
+    data.GTPointCoordinates = squeeze(GTcentres(i, :, :));
+    filePath = [saveDirectory, prefix, saveNumstr, '.json'];
+    saveJson(data, filePath);
 
 end
 
