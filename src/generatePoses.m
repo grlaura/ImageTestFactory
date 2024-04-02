@@ -4,15 +4,6 @@
 % actually planning to have
 % Bounds: Format is [XangMin, XangMax, YangMin, YangMax, ZangMin, ZangMax]
 
-% Pipe Flange
-% angBounds = [-5,5, -20, 0, -50, -20];
-% tBounds = [-50, 50, -50, 50, 130, 250];
-
-% Knuckle
-% angBounds = [10, 30, -10, 10, -10, 10]; 
-% tBounds = [-100, 100, -100, 100, 300, 500];
-% params.maxArea = 200
-
 filename = 'config.json';
 loadedData = loadParseJson(filename);
 
@@ -20,20 +11,15 @@ angBounds = loadedData.angBounds_K;
 tBounds = loadedData.tBounds_K;
 params.maxArea = loadedData.maxArea_K;
 
-
-%% Loading WorldPoints and Creating Full Grid
-%worldPts = readmatrix('C:\Users\ribeirol\Local_Documents\Gitlab\ITER-SW-MATLAB-CombinedCode\estimatePoseReflective\inputData\constellation_pipeflange.txt');
-%radius = 1.5;
-
-loadedData = loadParseJson(loadedData.worldPtsFile_K);
-worldPts = loadedData.pointCoordinates;
-
+loadedDataPts = loadParseJson(loadedData.worldPtsFile_K);
+worldPts = loadedDataPts.pointCoordinates;
 
 prefix = 'image_';
-saveDirectory = '../results/';
+saveDirectory = '../results/PosExamples/';
 fileType = '.png';
 
 addpath('..\..\shared');
+
 % Setting Camera Paramaters
 imageSize = [480,640];
 principalPoint = imageSize(1:2)./2 + 0.5;
@@ -43,10 +29,7 @@ f = focalL/(sensorW/imageSize(2)); % in pxls
 focalLength = [f,f];
 intrinsicParams = cameraIntrinsics(focalLength,principalPoint,imageSize);
 
-
-
 radius = 5; 
-
 worldPointsFull = [];
 gridSize = 20;
 for PtN=1:size(worldPts,1)
@@ -55,15 +38,13 @@ for PtN=1:size(worldPts,1)
     gridPoints = generateCircleGrid(x1, y1, radius, gridSize);
     worldPointsFull = [worldPointsFull; gridPoints];
 end
+worldPointsFull(:,3 ) = 0;
 
 % Calculatin centre of Constlation, making selection of transforms more intuitive
 centre(1) = mean([max(worldPts(:,1)), min(worldPts(:,1))]);
 centre(2) = mean([max(worldPts(:,2)), min(worldPts(:,2))]);
 centre(3) = mean([max(worldPts(:,3)), min(worldPts(:,3))]);
-
 RT44c = RTtoTransform(eye(3,3), centre);
-
-worldPointsFull(:,3 ) = 0;
 
 %% Create a set of random positions - check if points are in image
 rng(2);

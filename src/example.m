@@ -1,6 +1,6 @@
 imgResolution = [480, 640];
 prefix = 'image_';
-saveDirectory = '../results/';
+saveDirectory = '../results/simpleNegExamples/';
 fileType = '.png';
 
 
@@ -44,10 +44,3 @@ img = createBlobsImg(imgResolution, numBlobs, minBlobSize, maxBlobSize);
 % Save the image
 saveNextImg (img, saveDirectory, prefix, fileType)
 
-% Load JASON
-filename = 'constellationKnuckle.json';
-loadedArray = load_json_to_matlab(filename);
-
-% Display the loaded array
-disp('Loaded 2D array from JSON file:');
-disp(loadedArray);
