@@ -9,9 +9,25 @@
 % tBounds = [-50, 50, -50, 50, 130, 250];
 
 % Knuckle
-angBounds = [10, 30, -10, 10, -10, 10]; 
-tBounds = [-100, 100, -100, 100, 300, 500];
-params.maxArea = 200;
+% angBounds = [10, 30, -10, 10, -10, 10]; 
+% tBounds = [-100, 100, -100, 100, 300, 500];
+% params.maxArea = 200
+
+filename = 'config.json';
+loadedData = loadParseJson(filename);
+
+angBounds = loadedData.angBounds_K;
+tBounds = loadedData.tBounds_K;
+params.maxArea = loadedData.maxArea_K;
+
+
+%% Loading WorldPoints and Creating Full Grid
+%worldPts = readmatrix('C:\Users\ribeirol\Local_Documents\Gitlab\ITER-SW-MATLAB-CombinedCode\estimatePoseReflective\inputData\constellation_pipeflange.txt');
+%radius = 1.5;
+
+loadedData = loadParseJson(loadedData.worldPtsFile_K);
+worldPts = loadedData.pointCoordinates;
+
 
 prefix = 'image_';
 saveDirectory = '../results/';
@@ -27,12 +43,7 @@ f = focalL/(sensorW/imageSize(2)); % in pxls
 focalLength = [f,f];
 intrinsicParams = cameraIntrinsics(focalLength,principalPoint,imageSize);
 
-%% Loading WorldPoints and Creating Full Grid
-%worldPts = readmatrix('C:\Users\ribeirol\Local_Documents\Gitlab\ITER-SW-MATLAB-CombinedCode\estimatePoseReflective\inputData\constellation_pipeflange.txt');
-%radius = 1.5;
 
-filename = 'constellationKnuckle.json';
-worldPts = loadJsonToArray(filename);
 
 radius = 5; 
 
@@ -123,21 +134,3 @@ for i=1:size (saveImgPts,1)
 
 end
 
-function gridPoints = generateCircleGrid(x1, y1, radius, gridSize)
-    % Generate points on a regular grid covering the circle area
-
-    % Define the bounding box around the circle
-    minX = x1 - radius;
-    maxX = x1 + radius;
-    minY = y1 - radius;
-    maxY = y1 + radius;
-
-    % Create a grid of points within the bounding box
-    [X, Y] = meshgrid(linspace(minX, maxX, gridSize), linspace(minY, maxY, gridSize));
-    
-    % Check if each point is inside the circle
-    insideCircle = (X - x1).^2 + (Y - y1).^2 <= radius^2;
-    
-    % Filter out points outside the circle
-    gridPoints = [X(insideCircle) Y(insideCircle)];
-end

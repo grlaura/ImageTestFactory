@@ -1,6 +1,8 @@
 {
-    "angBounds": [10, 30, -10, 10, -10, 10],
-    "tBounds": [-100, 100, -100, 100, 300, 500],
-    "worldPtsFile": "./constellationKnuckle.json"
-
+    "angBounds_K": [10, 30, -10, 10, -10, 10],
+    "tBounds_K": [-100, 100, -100, 100, 300, 500],
+    "maxArea_K": [200],
+    "worldPtsFile_K": "constellationKnuckle.json",
+    "angBounds_PF": [-5,5, -20, 0, -50, -20],
+    "tBounds_PF": [-50, 50, -50, 50, 130, 250]
   }

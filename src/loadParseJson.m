@@ -1,4 +1,4 @@
-function myArray = loadJsonToArray(filename)
+function parsed_data = loadParseJson(filename)
     % Loads a 2D array from a JSON file and converts it to a Matlab 2D array.
     %
     % Args:
@@ -13,6 +13,4 @@ function myArray = loadJsonToArray(filename)
     % Parse the JSON data
     parsed_data = jsondecode(json_data);
 
-    % Convert the loaded data to a Matlab 2D array
-    myArray = parsed_data.data;
 end
